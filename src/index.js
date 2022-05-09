@@ -1,17 +1,50 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import * as ReactDOM from 'react-dom/client';
+import uuid from 'uuid';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+class Note extends React.Component {
+  
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.props.value.c}
+        </ul>
+      </div>
+    )
+  }
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {"c":1};
+  }
+
+
+  render() {
+
+    return(
+      <>
+        <input width="80%" id="finput" name="finput" className="finput" placeholder="Enter Text"></input>
+        <button id="btn" name="btn" className="btn">ADD</button>
+        <Note value={this.state}/>
+      </>
+    )
+  }
+}
+
+class Website extends React.Component {
+  render() {
+
+    return (
+      <div className="main">
+        <Input />
+      </div>
+    )
+  }
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <Website />
+)
