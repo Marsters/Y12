@@ -1,36 +1,36 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 
-class Note extends React.Component {
-  
-  render() {
-    return (
-      <div>
-        <ul>
-          {this.props.value.c}
-        </ul>
-      </div>
-    )
+var notes = new Map()
+
+class Remover {
+  constructor(id){
+    document.getElementById(id).remove()
+    notes.delete(id)
   }
 }
 
 class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {"c":1};
-  }
-
 
   render() {
-
+    let val = <></>;
     return(
       <>
         <input width="80%" id="finput" name="finput" className="finput" placeholder="Enter Text"></input>
-        <button id="btn" name="btn" className="btn">ADD</button>
-        <Note value={this.state}/>
+        <button id="btn" name="btn" className="btn" onClick={() => {
+          val = document.querySelector("input").value;
+          document.querySelector("input").value = "";
+          var id= uuid.v1();
+          notes.set(id, <li>{val}</li>)
+          document.querySelector("ul").insertAdjacentHTML("afterend", `<li id=${id}>${val}<button id="remover"></button></li>`)
+          console.log(notes)
+          document.getElementById("remover").onclick = () => {new Remover(id)}
+        }}>ADD</button>
+        <ul>
+        </ul>
       </>
-    )
+    );
   }
 }
 
@@ -41,7 +41,7 @@ class Website extends React.Component {
       <div className="main">
         <Input />
       </div>
-    )
+    );
   }
 }
 
